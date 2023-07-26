@@ -26,12 +26,12 @@ function spawnSync(cmd, args) {
       os.platform() === 'win32' ? cmd + '.cmd' : cmd
     ),
     args,
-    { stdio: 'inherit', env: { ...process.env, NX_TASKS_RUNNER_DYNAMIC_OUTPUT: 'false' } }
+    {
+      stdio: 'inherit',
+      env: { ...process.env, NX_TASKS_RUNNER_DYNAMIC_OUTPUT: 'false' },
+    }
   );
 }
-
-
-
 
 message('prepping turbo');
 spawnSync('turbo', ['run', 'build', `--concurrency=3`]);
@@ -61,7 +61,7 @@ for (let i = 0; i < NUMBER_OF_RUNS; ++i) {
   nxTime += a.getTime() - b.getTime();
   console.log(`The command ran in ${a.getTime() - b.getTime()}ms`);
 }
-  const averageNxTime = nxTime / NUMBER_OF_RUNS;
+const averageNxTime = nxTime / NUMBER_OF_RUNS;
 
 message('prepping lage');
 spawnSync('lage', ['build', '--concurrency', 3]);
@@ -76,13 +76,29 @@ for (let i = 0; i < NUMBER_OF_RUNS; ++i) {
   lageTime += a.getTime() - b.getTime();
   console.log(`The command ran in ${a.getTime() - b.getTime()}ms`);
 }
-const averageLageTime =
-    lageTime / NUMBER_OF_RUNS;
+const averageLageTime = lageTime / NUMBER_OF_RUNS;
+
+message('prepping lerna');
+spawnSync('lerna', ['run', 'build', `--concurrency=3`]);
+
+message(`running lerna ${NUMBER_OF_RUNS} times`);
+let lernaTime = 0;
+for (let i = 0; i < NUMBER_OF_RUNS; ++i) {
+  cleanFolders();
+  const b = new Date();
+  spawnSync('lerna', ['run', 'build', `--concurrency=10`]);
+  const a = new Date();
+  lernaTime += a.getTime() - b.getTime();
+  console.log(`The command ran in ${a.getTime() - b.getTime()}ms`);
+}
+const averageLernaTime = lernaTime / NUMBER_OF_RUNS;
 
 message('results');
+
 console.log(`average lage time is: ${averageLageTime}`);
 console.log(`average turbo time is: ${averageTurboTime}`);
 console.log(`average nx time is: ${averageNxTime}`);
+console.log(`average lerna time is: ${averageLernaTime}`);
 
 console.log(`nx is ${averageLageTime / averageNxTime}x faster than lage`);
 console.log(`nx is ${averageTurboTime / averageNxTime}x faster than turbo`);
