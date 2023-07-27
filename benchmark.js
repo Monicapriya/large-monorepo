@@ -32,7 +32,7 @@ function spawnSync(cmd, args) {
     }
   );
 }
-
+///TURBO
 message('prepping turbo');
 spawnSync('turbo', ['run', 'build', `--concurrency=3`]);
 
@@ -48,6 +48,8 @@ for (let i = 0; i < NUMBER_OF_RUNS; ++i) {
 }
 const averageTurboTime = turboTime / NUMBER_OF_RUNS;
 
+
+////NX
 message('prepping nx');
 spawnSync('nx', ['run-many', '-t', 'build']);
 
@@ -63,20 +65,21 @@ for (let i = 0; i < NUMBER_OF_RUNS; ++i) {
 }
 const averageNxTime = nxTime / NUMBER_OF_RUNS;
 
-message('prepping lage');
-spawnSync('lage', ['build', '--concurrency', 3]);
+///LAGE
+// message('prepping lage');
+// spawnSync('lage', ['build', '--concurrency', 3]);
 
-message(`running lage ${NUMBER_OF_RUNS} times`);
-let lageTime = 0;
-for (let i = 0; i < NUMBER_OF_RUNS; ++i) {
-  cleanFolders();
-  const b = new Date();
-  spawnSync('lage', ['build', '--concurrency', 10]);
-  const a = new Date();
-  lageTime += a.getTime() - b.getTime();
-  console.log(`The command ran in ${a.getTime() - b.getTime()}ms`);
-}
-const averageLageTime = lageTime / NUMBER_OF_RUNS;
+// message(`running lage ${NUMBER_OF_RUNS} times`);
+// let lageTime = 0;
+// for (let i = 0; i < NUMBER_OF_RUNS; ++i) {
+//   cleanFolders();
+//   const b = new Date();
+//   spawnSync('lage', ['build', '--concurrency', 10]);
+//   const a = new Date();
+//   lageTime += a.getTime() - b.getTime();
+//   console.log(`The command ran in ${a.getTime() - b.getTime()}ms`);
+// }
+// const averageLageTime = lageTime / NUMBER_OF_RUNS;
 
 message('prepping lerna');
 spawnSync('lerna', ['run', 'build', `--concurrency=3`]);
@@ -95,10 +98,11 @@ const averageLernaTime = lernaTime / NUMBER_OF_RUNS;
 
 message('results');
 
-console.log(`average lage time is: ${averageLageTime}`);
+// console.log(`average lage time is: ${averageLageTime}`);
 console.log(`average turbo time is: ${averageTurboTime}`);
 console.log(`average nx time is: ${averageNxTime}`);
 console.log(`average lerna time is: ${averageLernaTime}`);
 
-console.log(`nx is ${averageLageTime / averageNxTime}x faster than lage`);
+// console.log(`nx is ${averageLageTime / averageNxTime}x faster than lage`);
 console.log(`nx is ${averageTurboTime / averageNxTime}x faster than turbo`);
+console.log(`lerna is ${averageTurboTime / averageLernaTime}x faster than turbo`);

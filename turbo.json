@@ -18,10 +18,6 @@
     },
     "warp-drive-manager#build": {
       "outputs": [".next/**"]
-    },
-    "dev": {
-      "cache": false,
-      "dependsOn": ["setup"]
     }
   }
 }

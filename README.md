@@ -14,8 +14,7 @@ Combined there are about 26k components. It's a lot of components, but they are 
 size enterprise repo. A lot of our clients have repos that are 10x bigger than this, so this repo isn't something out or
 ordinary. And, the bigger the repo, the bigger the difference in performance between Nx and Turbo.
 
-The repo has Nx, Turbo, and Lage enabled. They don't affect each other. You can remove one without affecting the
-other one.
+The repo has Nx, Turbo, and Lage enabled. They don't affect each other. You can remove one without affecting the other one.
 
 ## Benchmark & Results (May 31)
 
